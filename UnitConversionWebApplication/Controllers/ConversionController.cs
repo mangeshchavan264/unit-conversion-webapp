@@ -23,31 +23,20 @@ namespace UnitConversionWebApplication.Controllers
         /// <returns>Converted value</returns>
         [HttpPost]
         public IActionResult Convert(
-        ConversionRequest request)
+            ConversionRequest request)
         {
-            try
-            {
-                var result =
-                    _conversionService.Convert(
-                        request.Value,
-                        request.FromUnit,
-                        request.ToUnit);
+            var result = _conversionService.Convert(
+                request.Value,
+                request.FromUnit,
+                request.ToUnit);
 
-                return Ok(new ConversionResponse
-                {
-                    OriginalValue = request.Value,
-                    FromUnit = request.FromUnit,
-                    ToUnit = request.ToUnit,
-                    ConvertedValue = result
-                });
-            }
-            catch (ArgumentException ex)
+            return Ok(new ConversionResponse
             {
-                return BadRequest(new
-                {
-                    Message = ex.Message
-                });
-            }
+                OriginalValue = request.Value,
+                FromUnit = request.FromUnit,
+                ToUnit = request.ToUnit,
+                ConvertedValue = result
+            });
         }
 
     }

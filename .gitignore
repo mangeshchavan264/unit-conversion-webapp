@@ -1,7 +1,14 @@
 ﻿# Visual Studio
+#.vs/
+#bin/
+#obj/
+
 .vs/
 bin/
 obj/
+TestResults/
+*.user
+*.suo
 
 # User-specific files
 *.user
@@ -12,3 +19,4 @@ obj/
 
 # VS Code
 .vscode/
+
