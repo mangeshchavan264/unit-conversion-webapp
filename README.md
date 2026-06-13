@@ -1,4 +1,4 @@
-﻿# Unit Conversion API
+# Unit Conversion API
 
 ## Overview
 
