@@ -18,11 +18,21 @@
         public static readonly Dictionary<string, double> WeightUnits =
             new()
             {
-             { "kilogram", 1 },
-            { "gram", 0.001 },
+             { "kg", 1 },
+            { "gm", 0.001 },
             { "milligram", 0.000001 },
             { "pound", 0.453592 },
             { "ounce", 0.0283495 }
+            };
+    
+
+     public static readonly Dictionary<string, double> TemperatureUnits =
+            new()
+            {
+             { "celsius", 1 },
+            { "fahrenheit", 212 },
+            {"kelvin", -272.15}
+
             };
     }
 }

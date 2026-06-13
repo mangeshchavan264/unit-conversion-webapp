@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Conversion Application</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .converter-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+            font-weight: 600;
+        }
+
+        input[type="number"], select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+            background-color: #fff;
+        }
+
+        input:focus, select:focus {
+            border-color: #4caf50;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .output-group input {
+            background-color: #e9e9e9;
+            color: #333;
+            font-weight: bold;
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="converter-container">
+        <h2>Unit Converter</h2>
+
+        <div class="input-group">
+            <label for="category">Category:</label>
+            <select id="category" onchange="populateUnits()">
+                <option value="length">Length</option>
+                <option value="weight">Weight</option>
+                <option value="temperature">Temperature</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label for="inputValue">Value to Convert:</label>
+            <input type="number" id="inputValue" placeholder="Enter number here">
+        </div>
+
+        <div class="input-group">
+            <label for="fromUnit">From Unit:</label>
+            <select id="fromUnit"></select>
+        </div>
+
+        <div class="input-group">
+            <label for="toUnit">To Unit:</label>
+            <select id="toUnit"></select>
+        </div>
+
+        <button onclick="performConversion()">Convert</button>
+
+        <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
+
+        <div class="input-group output-group">
+            <label for="outputResult">Result:</label>
+            <input type="text" id="outputResult" readonly placeholder="Result will appear here">
+        </div>
+    </div>
+
+    <script>
+        const units = {
+            length: ["meter", "kilometer", "centimeter", "millimeter", "feet", "inch", "yard", "mile"],
+            weight: ["kg", "gm", "milligram", "pound", "ounce"],
+            temperature: ["celsius", "fahrenheit", "kelvin"]
+        };
+
+        function populateUnits() {
+            const category = document.getElementById('category').value;
+            const options = units[category].map(u => `<option value="${u}">${u}</option>`).join('');
+            document.getElementById('fromUnit').innerHTML = options;
+            document.getElementById('toUnit').innerHTML = options;
+        }
+
+        async function performConversion() {
+            const value = parseFloat(document.getElementById('inputValue').value);
+            const fromUnit = document.getElementById('fromUnit').value;
+            const toUnit = document.getElementById('toUnit').value;
+            const outputBox = document.getElementById('outputResult');
+
+            if (isNaN(value)) {
+                outputBox.value = "Please enter a valid number.";
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/conversion/convert', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ value, fromUnit, toUnit })
+                });
+
+                if (!response.ok) throw new Error("Conversion failed");
+
+                const data = await response.json();
+                outputBox.value = data.convertedValue;
+            } catch (error) {
+                outputBox.value = error.message;
+            }
+        }
+
+        // Initialize dropdowns on page load
+        populateUnits();
+    </script>
+</body>
+</html>

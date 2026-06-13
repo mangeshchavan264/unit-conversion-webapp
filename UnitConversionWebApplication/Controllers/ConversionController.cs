@@ -21,7 +21,7 @@ namespace UnitConversionWebApplication.Controllers
         /// </summary>
         /// <param name="request">Conversion request</param>
         /// <returns>Converted value</returns>
-        [HttpPost]
+        [HttpPost("convert")]
         public IActionResult Convert(
             ConversionRequest request)
         {

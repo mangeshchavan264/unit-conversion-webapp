@@ -9,6 +9,7 @@ namespace UnitConversionWebApplication.Services
        string fromUnit,
        string toUnit)
         {
+            double baseValue = value;
             fromUnit = fromUnit.ToLower();
             toUnit = toUnit.ToLower();
 
@@ -16,7 +17,7 @@ namespace UnitConversionWebApplication.Services
             if (UnitDefinitions.LengthUnits.ContainsKey(fromUnit)
                 && UnitDefinitions.LengthUnits.ContainsKey(toUnit))
             {
-                double baseValue =
+                baseValue =
                     value * UnitDefinitions.LengthUnits[fromUnit];
 
                 return baseValue /
@@ -27,44 +28,34 @@ namespace UnitConversionWebApplication.Services
             if (UnitDefinitions.WeightUnits.ContainsKey(fromUnit)
                 && UnitDefinitions.WeightUnits.ContainsKey(toUnit))
             {
-                double baseValue =
+                baseValue =
                     value * UnitDefinitions.WeightUnits[fromUnit];
 
                 return baseValue /
                        UnitDefinitions.WeightUnits[toUnit];
             }
 
-            // Temperature Conversion
-            return ConvertTemperature(
-                value,
-                fromUnit,
-                toUnit);
-        }
 
-        private static double ConvertTemperature(
-            double value,
-            string fromUnit,
-            string toUnit)
-        {
-            if (fromUnit == "celsius" &&
-                toUnit == "fahrenheit")
+            // Temperature Conversion           
+            baseValue = fromUnit switch
             {
-                return (value * 9 / 5) + 32;
-            }
+                "celsius" => value,
+                "fahrenheit" => (value - 32) * 5 / 9,
+                "kelvin" => value - 273.15,
+                _ => throw new ArgumentException(
+                    $"Unsupported temperature unit: {fromUnit}")
+            };
 
-            if (fromUnit == "fahrenheit" &&
-                toUnit == "celsius")
+            double convertedValue = toUnit switch
             {
-                return (value - 32) * 5 / 9;
-            }
+                "celsius" => baseValue,
+                "fahrenheit" => (baseValue * 9 / 5) + 32,
+                "kelvin" => baseValue + 273.15,
+                _ => throw new ArgumentException(
+                    $"Unsupported temperature unit: {toUnit}")
+            };
 
-            if (fromUnit == toUnit)
-            {
-                return value;
-            }
-
-            throw new ArgumentException(
-     $"Conversion from '{fromUnit}' to '{toUnit}' is not supported.");
+            return convertedValue;
         }
     }
 }

@@ -53,6 +53,29 @@ namespace UnitConversionWebApplication.Tests
             Assert.Equal(100, result);
         }
 
+
+        [Fact]
+        public void Convert_Celsius_To_Kelvin_Returns_Correct_Value()
+        {
+            var service = new ConversionService();
+
+            var result =
+                service.Convert(1, "celsius", "kelvin");
+
+            Assert.Equal(274.15, result);
+        }
+
+        [Fact]
+        public void Convert_Kelvin_To_Celsius_Returns_Correct_Value()
+        {
+            var service = new ConversionService();
+
+            var result =
+                service.Convert(1, "kelvin", "celsius");
+
+            Assert.Equal(-272.15, result);
+        }
+
         [Fact]
         public void Unsupported_Conversion_Should_Throw_Exception()
         {
