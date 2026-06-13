@@ -13,5 +13,5 @@
   <ItemGroup>
     <Folder Include="wwwroot\screenshots\" />
   </ItemGroup>
-
+	
 </Project>
