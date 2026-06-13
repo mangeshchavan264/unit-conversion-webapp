@@ -1,95 +1,46 @@
-# Unit Conversion API
+# Unit Conversion Web Application
 
-## Overview
+A lightweight ASP.NET Core 8 Web API with a static HTML frontend for converting values across Length, Weight, and Temperature units.
 
-Unit Conversion API is an ASP.NET Core Web API that converts values between different units of measurement.
+## Tech Stack
 
-Currently supported categories:
-
-* Length
-* Weight / Mass
-* Temperature
-
-The solution is designed with scalability in mind, allowing additional units and conversion categories to be added with minimal code changes.
-
----
-
-## Technologies Used
-
-* .NET 8
-* ASP.NET Core Web API
-* Swagger / OpenAPI
-* Dependency Injection
-* C#
-
----
+- **Backend:** ASP.NET Core 8 Web API
+- **Frontend:** Plain HTML/CSS/JavaScript (static file in `wwwroot`)
+- **API Docs:** Swagger / OpenAPI (`Swashbuckle.AspNetCore 6.6.2`)
 
 ## Project Structure
 
-```text
-Controllers/
-Data/
-Models/
-Services/
-Program.cs
+```
+├── Controllers/
+│   └── ConversionController.cs   # POST /api/conversion/convert
+├── Data/
+│   └── UnitDefinitions.cs        # Unit dictionaries (Length, Weight)
+├── Middleware/
+│   └── ExceptionHandlingMiddleware.cs  # Global error handler
+├── Models/
+│   ├── ConversionRequest.cs      # Input model (Value, FromUnit, ToUnit)
+│   └── ConversionResponse.cs     # Output model
+├── Services/
+│   ├── IConversionService.cs     # Service interface
+│   └── ConversionService.cs      # Conversion logic
+├── wwwroot/
+│   └── index.html                # Frontend UI
+└── Program.cs                    # App entry point & middleware setup
 ```
 
-### Components
+## Supported Units
 
-* Controllers: API endpoints
-* Models: Request and response DTOs
-* Services: Business logic for conversions
-* Data: Unit definitions and conversion factors
+| Category    | Units |
+|-------------|-------|
+| Length      | meter, kilometer, centimeter, millimeter, feet, inch, yard, mile |
+| Weight      | kg, gm, milligram, pound, ounce |
+| Temperature | celsius, fahrenheit, kelvin |
 
----
+## API
 
-## Running the Project
+### POST `/api/conversion/convert`
 
-### Prerequisites
-
-* .NET 8 SDK
-* Visual Studio 2022
-
-### Run Locally
-
-Restore packages:
-
-```bash
-dotnet restore
-```
-
-Build:
-
-```bash
-dotnet build
-```
-
-Run:
-
-```bash
-dotnet run
-```
-
-Swagger UI will be available at:
-
-```text
-https://localhost:<port>/swagger
-```
-
----
-
-## API Endpoint
-
-### Convert Units
-
-POST
-
-```text
-/api/conversion
-```
-
-Request:
-
+**Request body:**
 ```json
 {
   "value": 100,
@@ -98,8 +49,7 @@ Request:
 }
 ```
 
-Response:
-
+**Response:**
 ```json
 {
   "originalValue": 100,
@@ -109,65 +59,24 @@ Response:
 }
 ```
 
----
+**Error response (400):**
+```json
+{ "message": "Unsupported temperature unit: xyz" }
+```
 
-## Supported Units
 
-### Length
+## Screenshot
 
-* meter
-* kilometer
-* centimeter
-* millimeter
-* feet
-* inch
-* yard
-* mile
+![App UI](wwwroot/screenshots/app.png)
 
-### Weight
 
-* kilogram
-* gram
-* milligram
-* pound
-* ounce
+## Kiro CLI
 
-### Temperature
+[![Built with Kiro](https://kiro.dev/images/kiro-badge-light.svg)](https://kiro.dev)
 
-* celsius
-* fahrenheit
+This project was built with assistance from [Kiro CLI](https://kiro.dev) — an AI-powered development agent that runs in the terminal.
 
----
-
-## Design Decisions
-
-### Service Layer
-
-Conversion logic is separated from controllers using a service layer to improve maintainability and testability.
-
-### Dependency Injection
-
-Services are registered using ASP.NET Core Dependency Injection.
-
-### Centralized Unit Definitions
-
-Conversion factors are maintained in a dedicated location, making it easy to add new units.
-
----
-
-## Future Improvements
-
-* Database-backed unit definitions
-* Additional conversion categories
-* Global exception handling middleware
-* Unit testing
-* Docker support
-* Logging with Serilog
-
----
-
-## Trade-Offs
-
-For simplicity, conversion factors are hardcoded in memory.
-
-In a production system, unit definitions would likely be stored in a database or configuration source to support hundreds of units and dynamic updates.
+Key things Kiro helped with:
+- Generating the conversion service and controller logic
+- Creating the static HTML frontend with unit dropdowns
+- Writing and maintaining this README
