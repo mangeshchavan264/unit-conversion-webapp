@@ -15,14 +15,13 @@ var app = builder.Build();
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 // Configure the HTTP request pipeline.
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
-
-    app.UseDefaultFiles();
-    app.UseStaticFiles();
-
+    app.UseSwaggerUI(c => c.RoutePrefix = "swagger");
 }
 
 
