@@ -51,13 +51,3 @@ A lightweight ASP.NET Core 8 Web API with a static HTML frontend for converting 
 ![App UI](UnitConversionWebApplication/wwwroot/screenshots/app.png)
 
 
-## Kiro CLI
-
-[![Built with Kiro](https://kiro.dev/images/kiro-badge-light.svg)](https://kiro.dev)
-
-This project was built with assistance from [Kiro CLI](https://kiro.dev) — an AI-powered development agent that runs in the terminal.
-
-Key things Kiro helped with:
-- Generating the conversion service and controller logic
-- Creating the static HTML frontend with unit dropdowns
-- Writing and maintaining this README
