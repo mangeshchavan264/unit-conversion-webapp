@@ -8,25 +8,6 @@ A lightweight ASP.NET Core 8 Web API with a static HTML frontend for converting 
 - **Frontend:** Plain HTML/CSS/JavaScript (static file in `wwwroot`)
 - **API Docs:** Swagger / OpenAPI (`Swashbuckle.AspNetCore 6.6.2`)
 
-## Project Structure
-
-```
-├── Controllers/
-│   └── ConversionController.cs   # POST /api/conversion/convert
-├── Data/
-│   └── UnitDefinitions.cs        # Unit dictionaries (Length, Weight)
-├── Middleware/
-│   └── ExceptionHandlingMiddleware.cs  # Global error handler
-├── Models/
-│   ├── ConversionRequest.cs      # Input model (Value, FromUnit, ToUnit)
-│   └── ConversionResponse.cs     # Output model
-├── Services/
-│   ├── IConversionService.cs     # Service interface
-│   └── ConversionService.cs      # Conversion logic
-├── wwwroot/
-│   └── index.html                # Frontend UI
-└── Program.cs                    # App entry point & middleware setup
-```
 
 ## Supported Units
 
