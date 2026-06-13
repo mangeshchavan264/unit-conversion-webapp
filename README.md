@@ -67,7 +67,7 @@ A lightweight ASP.NET Core 8 Web API with a static HTML frontend for converting 
 
 ## Screenshot
 
-![App UI](wwwroot/screenshots/app.png)
+![App UI](UnitConversionWebApplication/wwwroot/screenshots/app.png)
 
 
 ## Kiro CLI
